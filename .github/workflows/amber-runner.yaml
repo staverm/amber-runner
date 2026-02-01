@@ -9,7 +9,7 @@ jobs:
       - uses: actions/checkout@v4
       - name: Compile scenario
         run: |
-          docker run --rm \
+          docker run --rm --user "$(id -u):$(id -g)" \
             -v "${{ github.workspace }}:/work" \
             ghcr.io/rdi-foundation/amber-cli:main \
             compile /work/scenario.json5 --compose /work/docker-compose.yml
