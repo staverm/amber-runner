@@ -1,0 +1,20 @@
+name: amber
+
+on: push
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Compile scenario
+        run: |
+          docker run --rm \
+            -v "${{ github.workspace }}:/work" \
+            ghcr.io/rdi-foundation/amber-cli:main \
+            compile /work/scenario.json5 --compose /work/docker-compose.yml
+      - name: Export secrets as env vars
+        run: |
+          echo '${{ toJson(secrets) }}' | jq -r 'to_entries[] | "\(.key)=\(.value)"' >> "$GITHUB_ENV"
+      - name: Run scenario
+        run: docker compose up --abort-on-container-exit
