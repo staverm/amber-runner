@@ -1,0 +1,37 @@
+{
+  manifest_version: "0.1.0",
+  program: {
+    image: "ghcr.io/rdi-foundation/agentbeats-tutorial-debate-judge:latest",
+    entrypoint: "uv run python scenarios/debate/judge/src/server.py --host 0.0.0.0 --port 9009 --card-url ${config.card_url}",
+    env: {
+      GOOGLE_API_KEY: "${config.google_api_key}",
+      // unused
+      PRO_DEBATER: "${slots.pro_debater.url}",
+      CON_DEBATER: "${slots.con_debater.url}",
+    },
+    network: {
+      endpoints: [
+        { name: "endpoint", port: 9009 },
+      ],
+    },
+  },
+  config_schema: {
+    type: "object",
+    properties: {
+      card_url: { type: "string" },
+      google_api_key: { type: "string", secret: true },
+    },
+    required: ["card_url", "google_api_key"],
+    additionalProperties: false,
+  },
+  slots: {
+    pro_debater: { kind: "a2a" },
+    con_debater: { kind: "a2a" },
+  },
+  provides: {
+    a2a: { kind: "a2a", endpoint: "endpoint" },
+  },
+  exports: {
+    a2a: "a2a",
+  },
+}

@@ -1,0 +1,53 @@
+{
+  manifest_version: "0.1.0",
+  config_schema: {
+    type: "object",
+    properties: {
+      google_api_key: { type: "string", secret: true },
+    },
+    required: ["google_api_key"],
+    additionalProperties: false,
+  },
+  components: {
+    client: {
+      manifest: "./agentbeats-client.json5",
+      config: {
+        participants: {
+          pro_debater: "${bindings.pro_debater.url}",
+          con_debater: "${bindings.con_debater.url}"
+        },
+        assessment_config: {
+          topic: "AI should be regulated.",
+          num_rounds: 1,
+        },
+      },
+    },
+    green: {
+      manifest: "./debate-judge.json5",
+      config: {
+        card_url: "${bindings.green.url}",
+        google_api_key: "${config.google_api_key}",
+      },
+    },
+    pro_debater: {
+      manifest: "./debater.json5",
+      config: {
+        card_url: "${bindings.pro_debater.url}",
+        google_api_key: "${config.google_api_key}",
+      },
+    },
+    con_debater: {
+      manifest: "./debater.json5",
+      config: {
+        card_url: "${bindings.con_debater.url}",
+        google_api_key: "${config.google_api_key}",
+      },
+    },
+  },
+  bindings: [
+    { to: "#client.green", from: "#green.a2a", name: "green" },
+    { to: "#green.pro_debater", from: "#pro_debater.a2a", name: "pro_debater" },
+    { to: "#green.con_debater", from: "#con_debater.a2a", name: "con_debater" },
+  ],
+  exports: { result: "#client.result" },
+}
