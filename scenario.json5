@@ -10,7 +10,7 @@
   },
   components: {
     client: {
-      manifest: "./agentbeats-client.json5",
+      manifest: "./agentbeats-gateway.json5",
       config: {
         participants: {
           pro_debater: "${bindings.pro_debater.url}",
