@@ -1,6 +1,19 @@
 name: amber
 
-on: push
+on:
+  workflow_dispatch:
+    inputs:
+      scenario:
+        description: 'Path to the root scenario manifest'
+        required: true
+        default: 'scenario.json5'
+        type: string
+  workflow_call:
+    inputs:
+      scenario:
+        description: 'Path to the root scenario manifest'
+        required: true
+        type: string
 
 jobs:
   run:
@@ -12,9 +25,64 @@ jobs:
           docker run --rm --user "$(id -u):$(id -g)" \
             -v "${{ github.workspace }}:/work" \
             ghcr.io/rdi-foundation/amber-cli:main \
-            compile /work/scenario.json5 --compose /work/docker-compose.yml
+            compile "/work/${{ inputs.scenario }}" \
+              --output /work/scenario-ir.json \
+              --compose /work/docker-compose.yml
       - name: Export secrets as env vars
         run: |
           echo '${{ toJson(secrets) }}' | jq -r 'to_entries[] | "\(.key)=\(.value)"' >> "$GITHUB_ENV"
       - name: Run scenario
         run: docker compose up --abort-on-container-exit
+      - name: Copy results from container
+        run: |
+          docker cp "$(docker compose ps -aq gateway)":/output/results.json results.json
+      - name: Append agent mappings to results
+        run: |
+          jq '[.components[] | select(.metadata.agentbeats_id) | {(.moniker | ltrimstr("/")): .metadata.agentbeats_id}] | add // {}' \
+            scenario-ir.json > participants.json
+          jq -s '.[0] + {participants: .[1]}' results.json participants.json > result-final.json
+          mv result-final.json results.json
+      - name: Generate provenance file
+        run: |
+          image_digests="{}"
+          for row in $(jq -r '.components[] | select(.program) | "\(.moniker)=\(.program.image)"' scenario-ir.json); do
+            name="${row%%=*}"
+            image="${row#*=}"
+            digest=$(docker image inspect "$image" --format '{{index .RepoDigests 0}}')
+            image_digests=$(echo "$image_digests" | jq --arg k "$name" --arg v "$digest" '. + {($k): $v}')
+          done
+
+          timestamp=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+
+          manifest_digests=$(jq '[.components[] | {(.moniker): .digest}] | add // {}' scenario-ir.json)
+
+          jq -n \
+            --argjson image_digests "$image_digests" \
+            --argjson manifest_digests "$manifest_digests" \
+            --arg timestamp "$timestamp" \
+            --arg run_url "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" \
+            --arg ref "${{ github.ref }}" \
+            --arg sha "${{ github.sha }}" \
+            --arg repository_url "${{ github.server_url }}/${{ github.repository }}" \
+            --arg workflow_ref "${{ github.workflow_ref }}" \
+            --arg workflow_sha "${{ github.workflow_sha }}" \
+            '{
+              image_digests: $image_digests,
+              manifest_digests: $manifest_digests,
+              timestamp: $timestamp,
+              github_actions: {
+                run_url: $run_url,
+                ref: $ref,
+                sha: $sha,
+                repository_url: $repository_url,
+                workflow_ref: $workflow_ref,
+                workflow_sha: $workflow_sha
+              }
+            }' > provenance.json
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: scenario-results
+          path: |
+            results.json
+            provenance.json
