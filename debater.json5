@@ -2,7 +2,7 @@
   manifest_version: "0.1.0",
   program: {
     image: "ghcr.io/rdi-foundation/agentbeats-tutorial-debater:latest",
-    entrypoint: "uv run python scenarios/debate/debater/src/server.py --host 0.0.0.0. --port 9010 --card-url ${config.card_url}",
+    entrypoint: "uv run --no-sync python scenarios/debate/debater/src/server.py --host 0.0.0.0. --port 9010 --card-url ${config.card_url}",
     env: {
       GOOGLE_API_KEY: "${config.google_api_key}",
     },
@@ -24,5 +24,6 @@
   provides: {
     a2a: { kind: "a2a", endpoint: "endpoint" },
   },
+  metadata: { agentbeats_id: "123" },
   exports: { a2a: "a2a" },
 }

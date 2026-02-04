@@ -2,7 +2,7 @@
   manifest_version: "0.1.0",
   program: {
     image: "ghcr.io/staverm/agentbeats-gateway:latest",
-    entrypoint: "uv run python src/main.py --port 8080",
+    entrypoint: "uv run --no-sync python src/main.py --port 8080",
     env: {
       GREEN_URL: "${slots.green.url}",
       PARTICIPANTS: "${config.participants}",

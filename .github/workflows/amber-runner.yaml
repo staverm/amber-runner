@@ -35,6 +35,7 @@ jobs:
         run: docker compose up -d
       - name: Poll for results
         run: |
+          docker compose logs -f &
           poll_host=$(yq '.x-amber.exports | to_entries | .[0].value.published_host' docker-compose.yml)
           poll_port=$(yq '.x-amber.exports | to_entries | .[0].value.published_port' docker-compose.yml)
           poll_url="http://${poll_host}:${poll_port}/result"

@@ -2,7 +2,7 @@
   manifest_version: "0.1.0",
   program: {
     image: "ghcr.io/rdi-foundation/agentbeats-tutorial-debate-judge:latest",
-    entrypoint: "uv run python scenarios/debate/judge/src/server.py --host 0.0.0.0 --port 9009 --card-url ${config.card_url}",
+    entrypoint: "uv run --no-sync python scenarios/debate/judge/src/server.py --host 0.0.0.0 --port 9009 --card-url ${config.card_url}",
     env: {
       GOOGLE_API_KEY: "${config.google_api_key}",
       // unused
@@ -31,6 +31,7 @@
   provides: {
     a2a: { kind: "a2a", endpoint: "endpoint" },
   },
+  metadata: { agentbeats_id: "321" },
   exports: {
     a2a: "a2a",
   },
