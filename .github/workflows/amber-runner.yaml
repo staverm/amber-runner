@@ -32,10 +32,27 @@ jobs:
         run: |
           echo '${{ toJson(secrets) }}' | jq -r 'to_entries[] | "\(.key)=\(.value)"' >> "$GITHUB_ENV"
       - name: Run scenario
-        run: docker compose up --exit-code-from agentbeats-gateway
-      - name: Copy results from container
+        run: docker compose up -d
+      - name: Poll for results
         run: |
-          docker cp "$(docker compose ps -aq gateway)":/output/results.json results.json
+          poll_host=$(yq '.x-amber.exports | to_entries | .[0].value.published_host' docker-compose.yml)
+          poll_port=$(yq '.x-amber.exports | to_entries | .[0].value.published_port' docker-compose.yml)
+          poll_url="http://${poll_host}:${poll_port}/result"
+          echo "Polling ${poll_url}..."
+          while true; do
+            if response=$(curl -sf "${poll_url}"); then
+              status=$(echo "${response}" | jq -r '.status')
+              if [ "${status}" != "running" ]; then
+                echo "${response}" | jq . > results.json
+                echo "Scenario finished with status: ${status}"
+                break
+              fi
+            fi
+            sleep 5
+          done
+      - name: Stop scenario
+        if: always()
+        run: docker compose down
       - name: Append agent mappings to results
         run: |
           jq '[.components[] | select(.metadata.agentbeats_id) | {(.moniker | ltrimstr("/")): .metadata.agentbeats_id}] | add // {}' \
