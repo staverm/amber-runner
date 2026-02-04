@@ -24,6 +24,6 @@
   provides: {
     a2a: { kind: "a2a", endpoint: "endpoint" },
   },
-  metadata: { agentbeats_id: "321" },
+  metadata: { agentbeats_id: "123" },
   exports: { a2a: "a2a" },
 }
