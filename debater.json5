@@ -1,10 +1,10 @@
 {
   manifest_version: "0.1.0",
   program: {
-    image: "ghcr.io/rdi-foundation/agentbeats-tutorial-debater:latest",
-    entrypoint: "uv run --no-sync python scenarios/debate/debater/src/server.py --host 0.0.0.0. --port 9010 --card-url ${config.card_url}",
+    image: "ghcr.io/staverm/simple-agent:latest",
+    entrypoint: "uv run --no-sync python src/server.py --host 0.0.0.0 --port 9010 --card-url ${config.card_url}",
     env: {
-      GOOGLE_API_KEY: "${config.google_api_key}",
+      OPENAI_API_KEY: "${config.openai_api_key}",
     },
     network: {
       endpoints: [
@@ -16,14 +16,14 @@
     type: "object",
     properties: {
       card_url: { type: "string" },
-      google_api_key: { type: "string", secret: true },
+      openai_api_key: { type: "string", secret: true },
     },
-    required: ["card_url", "google_api_key"],
+    required: ["openai_api_key"],
     additionalProperties: false,
   }, 
   provides: {
     a2a: { kind: "a2a", endpoint: "endpoint" },
   },
-  metadata: { agentbeats_id: "123" },
+  metadata: { agentbeats_id: "321" },
   exports: { a2a: "a2a" },
 }
