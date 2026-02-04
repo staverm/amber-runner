@@ -1,4 +1,4 @@
-name: amber
+name: amber runner
 
 on:
   workflow_dispatch:
@@ -32,7 +32,7 @@ jobs:
         run: |
           echo '${{ toJson(secrets) }}' | jq -r 'to_entries[] | "\(.key)=\(.value)"' >> "$GITHUB_ENV"
       - name: Run scenario
-        run: docker compose up --abort-on-container-exit
+        run: docker compose up --exit-code-from agentbeats-gateway
       - name: Copy results from container
         run: |
           docker cp "$(docker compose ps -aq gateway)":/output/results.json results.json
