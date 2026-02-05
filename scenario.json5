@@ -50,5 +50,5 @@
     { to: "#green.pro_debater", from: "#pro_debater.a2a", name: "pro_debater" },
     { to: "#green.con_debater", from: "#con_debater.a2a", name: "con_debater" },
   ],
-  exports: { result: "#client.result" },
+  exports: { results: "#client.result" },
 }
