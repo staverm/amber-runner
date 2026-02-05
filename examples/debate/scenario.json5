@@ -10,8 +10,8 @@
     additionalProperties: false,
   },
   components: {
-    client: {
-      manifest: "./agentbeats-client.json5",
+    gateway: {
+      manifest: "./agentbeats-gateway.json5",
       config: {
         participants: {
           pro_debater: "${bindings.pro_debater.url}",
@@ -46,9 +46,9 @@
     },
   },
   bindings: [
-    { to: "#client.green", from: "#green.a2a", name: "green" },
+    { to: "#gateway.green", from: "#green.a2a", name: "green" },
     { to: "#green.pro_debater", from: "#pro_debater.a2a", name: "pro_debater" },
     { to: "#green.con_debater", from: "#con_debater.a2a", name: "con_debater" },
   ],
-  exports: { results: "#client.result" },
+  exports: { results: "#gateway.results" },
 }

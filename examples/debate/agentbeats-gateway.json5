@@ -10,7 +10,7 @@
     },
     network: {
       endpoints: [
-        { name: "result", port: 8080 },
+        { name: "results", port: 8080 },
       ],
     },
   },
@@ -26,7 +26,7 @@
     green: { kind: "a2a" },
   },
   provides: {
-    result: { kind: "http", endpoint: "result" },
+    results: { kind: "http", endpoint: "results" },
   },
   exports: { result: "result" },
 }

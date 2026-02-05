@@ -6,7 +6,7 @@ on:
       scenario:
         description: 'Path to the root scenario manifest'
         required: true
-        default: 'scenario.json5'
+        default: 'examples/debate/scenario.json5'
         type: string
   workflow_call:
     inputs:
@@ -36,6 +36,10 @@ jobs:
       - name: Poll for results
         run: |
           docker compose logs -f &
+          if ! yq -e '.x-amber.exports.results' docker-compose.yml > /dev/null 2>&1; then
+            echo "Error: scenario must have an export named 'results'" >&2
+            exit 1
+          fi
           poll_host=$(yq '.x-amber.exports.results.published_host' docker-compose.yml)
           poll_port=$(yq '.x-amber.exports.results.published_port' docker-compose.yml)
           poll_url="http://${poll_host}:${poll_port}"
