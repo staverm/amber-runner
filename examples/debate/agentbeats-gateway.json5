@@ -28,5 +28,5 @@
   provides: {
     results: { kind: "http", endpoint: "results" },
   },
-  exports: { result: "result" },
+  exports: { results: "results" },
 }
