@@ -22,10 +22,17 @@ jobs:
       - uses: actions/checkout@v4
       - name: Compile scenario
         run: |
+          scenario="${{ inputs.scenario }}"
+          if [[ "${scenario}" =~ ^https?:// ]]; then
+            curl -fsSL "${scenario}" -o scenario-input.json5
+            scenario_path="/work/scenario-input.json5"
+          else
+            scenario_path="/work/${scenario}"
+          fi
           docker run --rm --user "$(id -u):$(id -g)" \
             -v "${{ github.workspace }}:/work" \
             ghcr.io/rdi-foundation/amber-cli:main \
-            compile "/work/${{ inputs.scenario }}" \
+            compile "${scenario_path}" \
               --output /work/scenario-ir.json \
               --compose /work/docker-compose.yml
       - name: Export secrets as env vars
@@ -54,7 +61,7 @@ jobs:
       - name: Stop scenario
         if: always()
         run: docker compose down
-      - name: Append agent mappings to results
+      - name: Append participants to results
         run: |
           jq '[.components[] | select(.metadata.agentbeats_id) | {(.moniker | ltrimstr("/")): .metadata.agentbeats_id}] | add // {}' \
             scenario-ir.json > participants.json
