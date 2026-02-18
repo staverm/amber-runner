@@ -1,0 +1,76 @@
+{
+  "bindings": [
+    {
+      "from": "#green.a2a",
+      "name": "green",
+      "to": "#gateway.green"
+    },
+    {
+      "from": "#pro_debater.a2a",
+      "name": "pro_debater",
+      "to": "#green.pro_debater"
+    },
+    {
+      "from": "#con_debater.a2a",
+      "name": "con_debater",
+      "to": "#green.con_debater"
+    }
+  ],
+  "components": {
+    "con_debater": {
+      "config": {
+        "card_url": "${bindings.con_debater.url}",
+        "openai_api_key": "${config.openai_api_key}"
+      },
+      "manifest": "https://raw.githubusercontent.com/staverm/amber-runner/refs/heads/main/examples/debate/debater.json5"
+    },
+    "gateway": {
+      "config": {
+        "assessment_config": {
+          "num_rounds": 1,
+          "topic": "AI should be regulated."
+        },
+        "participants": {
+          "con_debater": "${bindings.con_debater.url}",
+          "pro_debater": "${bindings.pro_debater.url}"
+        }
+      },
+      "manifest": "https://raw.githubusercontent.com/staverm/amber-runner/refs/heads/main/examples/debate/agentbeats-gateway.json5"
+    },
+    "green": {
+      "config": {
+        "card_url": "${bindings.green.url}",
+        "google_api_key": "${config.google_api_key}"
+      },
+      "manifest": "https://raw.githubusercontent.com/staverm/amber-runner/refs/heads/main/examples/debate/debate-judge.json5"
+    },
+    "pro_debater": {
+      "config": {
+        "card_url": "${bindings.pro_debater.url}",
+        "openai_api_key": "${config.openai_api_key}"
+      },
+      "manifest": "https://raw.githubusercontent.com/staverm/amber-runner/refs/heads/main/examples/debate/debater.json5"
+    }
+  },
+  "config_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "google_api_key": {
+        "secret": true,
+        "type": "string"
+      },
+      "openai_api_key": {
+        "secret": true,
+        "type": "string"
+      }
+    },
+    "required": [
+      "google_api_key"
+    ],
+    "type": "object"
+  },
+  "exports": {
+    "results": "#gateway.results"
+  },
+  "manifest_version": "0.1.0"
+}
