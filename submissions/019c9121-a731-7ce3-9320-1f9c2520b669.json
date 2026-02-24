@@ -1,0 +1,92 @@
+{
+  "bindings": [
+    {
+      "from": "#debate-judge.a2a",
+      "to": "#gateway.green"
+    },
+    {
+      "from": "#pro_debater.a2a",
+      "to": "#gateway.purple1"
+    },
+    {
+      "from": "#con_debater.a2a",
+      "to": "#gateway.purple2"
+    },
+    {
+      "from": "#gateway.proxy",
+      "name": "green-proxy",
+      "to": "#debate-judge.proxy",
+      "weak": true
+    }
+  ],
+  "components": {
+    "con_debater": {
+      "config": {
+        "openai_api_key": "${config.con_debater__openai_api_key}"
+      },
+      "manifest": "https://raw.githubusercontent.com/staverm/amber-runner/refs/heads/main/examples/debate-proxy/debater.json5"
+    },
+    "debate-judge": {
+      "config": {
+        "google_api_key": "${config.debate-judge__google_api_key}"
+      },
+      "manifest": "https://raw.githubusercontent.com/staverm/amber-runner/refs/heads/main/examples/debate-proxy/debate-judge.json5"
+    },
+    "gateway": {
+      "config": {
+        "assessment_config": {
+          "num_rounds": 1,
+          "topic": "AI should be regulated."
+        },
+        "callback_urls": {
+          "green": "${bindings.green-proxy.url}"
+        },
+        "participant_roles": {
+          "green": "debate-judge",
+          "purple1": "pro_debater",
+          "purple2": "con_debater"
+        }
+      },
+      "manifest": "https://raw.githubusercontent.com/staverm/amber-runner/refs/heads/main/examples/debate-proxy/gateway.json5"
+    },
+    "pro_debater": {
+      "config": {
+        "openai_api_key": "${config.pro_debater__openai_api_key}"
+      },
+      "manifest": "https://raw.githubusercontent.com/staverm/amber-runner/refs/heads/main/examples/debate-proxy/debater.json5"
+    }
+  },
+  "config_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "con_debater__openai_api_key": {
+        "secret": true,
+        "type": "string"
+      },
+      "debate-judge__google_api_key": {
+        "secret": true,
+        "type": "string"
+      },
+      "pro_debater__openai_api_key": {
+        "secret": true,
+        "type": "string"
+      }
+    },
+    "required": [
+      "debate-judge__google_api_key",
+      "pro_debater__openai_api_key",
+      "con_debater__openai_api_key"
+    ],
+    "type": "object"
+  },
+  "exports": {
+    "results": "#gateway.results"
+  },
+  "manifest_version": "0.1.0",
+  "metadata": {
+    "agentbeats_ids": {
+      "con_debater": "019c90fe-4efe-7b20-8ef2-8d296fb56148",
+      "pro_debater": "019c90fe-4efe-7b20-8ef2-8d296fb56148"
+    }
+  }
+}
