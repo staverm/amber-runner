@@ -1,0 +1,27 @@
+{
+  "status": "completed",
+  "results": [
+    {
+      "pro_debater": {
+        "emotional_appeal": 0.7,
+        "argument_clarity": 0.9,
+        "argument_arrangement": 0.8,
+        "relevance_to_topic": 0.9,
+        "total_score": 3.3
+      },
+      "con_debater": {
+        "emotional_appeal": 0.6,
+        "argument_clarity": 0.8,
+        "argument_arrangement": 0.7,
+        "relevance_to_topic": 0.8,
+        "total_score": 2.9
+      },
+      "winner": "pro_debater",
+      "reason": "The pro debater presented a well-structured argument with clear points on safety, ethics, and privacy, directly addressing potential risks of AI. The con debater's arguments, while logical, focused more on the potential downsides of regulation rather than offering concrete solutions to the risks highlighted by the pro side. The pro debater's appeal to responsibility and societal benefit was slightly more persuasive."
+    }
+  ],
+  "participants": {
+    "pro_debater": "019c90fe-4efe-7b20-8ef2-8d296fb56148",
+    "con_debater": "019c90fe-4efe-7b20-8ef2-8d296fb56148"
+  }
+}
