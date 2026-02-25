@@ -1,0 +1,27 @@
+{
+  "status": "completed",
+  "results": [
+    {
+      "pro_debater": {
+        "emotional_appeal": 0.7,
+        "argument_clarity": 0.9,
+        "argument_arrangement": 0.8,
+        "relevance_to_topic": 1.0,
+        "total_score": 3.4
+      },
+      "con_debater": {
+        "emotional_appeal": 0.6,
+        "argument_clarity": 0.8,
+        "argument_arrangement": 0.7,
+        "relevance_to_topic": 0.9,
+        "total_score": 2.9
+      },
+      "winner": "pro_debater",
+      "reason": "The Pro debater provided a more comprehensive and well-structured argument, touching on multiple critical aspects of AI regulation such as safety, accountability, innovation, privacy, and international cooperation. The arguments were clear and directly addressed the topic. The Con debater raised valid points about stifling innovation and the pace of regulation, but their arguments were slightly less developed and the claim that existing privacy laws are sufficient was not as compelling as the Pro's arguments for specific AI data regulation."
+    }
+  ],
+  "participants": {
+    "pro_debater": "019c90fe-4efe-7b20-8ef2-8d296fb56148",
+    "con_debater": "019c90fe-4efe-7b20-8ef2-8d296fb56148"
+  }
+}
