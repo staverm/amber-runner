@@ -5,6 +5,8 @@
     entrypoint: "uv run --no-sync python src/server.py --host 0.0.0.0 --port 9010",
     env: {
       OPENAI_API_KEY: "${config.openai_api_key}",
+      LOG_LEVEL: "${config.log_level}",
+      SIZE: "${config.size}",
     },
     network: {
       endpoints: [
@@ -16,8 +18,10 @@
     type: "object",
     properties: {
       openai_api_key: { type: "string", secret: true },
+      log_level: { type: "string" },
+      size: { type: "integer" },
     },
-    required: ["openai_api_key"],
+    required: ["openai_api_key", "log_level"],
     additionalProperties: false,
   },
   provides: {
