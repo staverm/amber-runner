@@ -1,0 +1,110 @@
+{
+  "manifest_version": "0.1.0",
+  "config_schema": {
+    "type": "object",
+    "properties": {
+      "con_debater_log_level": {
+        "type": "string"
+      },
+      "con_debater_openai_api_key": {
+        "type": "string",
+        "secret": true
+      },
+      "con_debater_size": {
+        "type": "integer"
+      },
+      "green_google_api_key": {
+        "type": "string",
+        "secret": true
+      },
+      "pro_debater_log_level": {
+        "type": "string"
+      },
+      "pro_debater_openai_api_key": {
+        "type": "string",
+        "secret": true
+      },
+      "pro_debater_size": {
+        "type": "integer"
+      }
+    },
+    "required": [
+      "green_google_api_key",
+      "pro_debater_openai_api_key",
+      "pro_debater_log_level",
+      "con_debater_openai_api_key",
+      "con_debater_log_level"
+    ],
+    "additionalProperties": false
+  },
+  "components": {
+    "gateway": {
+      "manifest": "https://raw.githubusercontent.com/RDI-Foundation/agentbeats-gateway/refs/heads/main/amber-manifest.json5",
+      "config": {
+        "assessment_config": {
+          "num_rounds": 1,
+          "topic": "AI should be regulated."
+        },
+        "participant_roles": {
+          "green": "debate_judge_2",
+          "purple1": "pro_debater",
+          "purple2": "con_debater"
+        },
+        "callback_urls": {
+          "green": "${bindings.green-proxy.url}"
+        }
+      }
+    },
+    "debate_judge_2": {
+      "manifest": "https://raw.githubusercontent.com/staverm/amber-runner/refs/heads/main/examples/debate-proxy/debate-judge.json5",
+      "config": {
+        "google_api_key": "${config.green_google_api_key}"
+      }
+    },
+    "pro_debater": {
+      "manifest": "https://raw.githubusercontent.com/staverm/amber-runner/refs/heads/main/examples/debate-proxy/debater.json5",
+      "config": {
+        "log_level": "${config.pro_debater_log_level}",
+        "openai_api_key": "${config.pro_debater_openai_api_key}",
+        "size": "${config.pro_debater_size}"
+      }
+    },
+    "con_debater": {
+      "manifest": "https://raw.githubusercontent.com/staverm/amber-runner/refs/heads/main/examples/debate-proxy/debater.json5",
+      "config": {
+        "log_level": "${config.con_debater_log_level}",
+        "openai_api_key": "${config.con_debater_openai_api_key}",
+        "size": "${config.con_debater_size}"
+      }
+    }
+  },
+  "bindings": [
+    {
+      "to": "#gateway.green",
+      "from": "#debate_judge_2.a2a"
+    },
+    {
+      "to": "#gateway.purple1",
+      "from": "#pro_debater.a2a"
+    },
+    {
+      "to": "#gateway.purple2",
+      "from": "#con_debater.a2a"
+    },
+    {
+      "to": "#debate_judge_2.proxy",
+      "from": "#gateway.proxy",
+      "weak": true,
+      "name": "green-proxy"
+    }
+  ],
+  "exports": {
+    "results": "#gateway.results"
+  },
+  "metadata": {
+    "agentbeats_ids": {
+      "pro_debater": "019c9c64-da04-7a41-94dc-ab6d7e5d77a5",
+      "con_debater": "019c9c64-da04-7a41-94dc-ab6d7e5d77a5"
+    }
+  }
+}
