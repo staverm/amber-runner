@@ -1,0 +1,9 @@
+{
+  "status": "failed",
+  "error": "Timeout: agents not ready",
+  "participants": {
+    "green": "019c9c68-aa39-7960-a83c-46546897b75c",
+    "pro_debater": "019c9c64-da04-7a41-94dc-ab6d7e5d77a5",
+    "con_debater": "019c9c64-da04-7a41-94dc-ab6d7e5d77a5"
+  }
+}
