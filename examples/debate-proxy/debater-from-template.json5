@@ -25,7 +25,7 @@
 
     // TODO: Pass config values as environment variables.
     env: {
-      MY_API_KEY: "${config.openai_api_key}",
+      OPENAI_API_KEY: "${config.openai_api_key}",
       PROXY_URL: "${slots.proxy.url}", // keep even if your agent doesn't use it directly
     },
 
