@@ -1,0 +1,24 @@
+{
+  "image_digests": {
+    "/con_debater": "ghcr.io/staverm/simple-agent@sha256:603b762edfd011034696ff9e1ccbca78026570d531b2e63c784eb6126cd9b38c",
+    "/gateway": "ghcr.io/rdi-foundation/agentbeats-gateway@sha256:74da31128b28728915317f9319878414acbe46a3d785306a0973d68d8d34ebda",
+    "/green": "ghcr.io/rdi-foundation/agentbeats-tutorial-debate-judge@sha256:c3b5f8efd0d55457c11dc27a329197121ebdbdc556b4c43fff1d369d805c5368",
+    "/pro_debater": "ghcr.io/staverm/simple-agent@sha256:603b762edfd011034696ff9e1ccbca78026570d531b2e63c784eb6126cd9b38c"
+  },
+  "manifest_digests": {
+    "/": "sha256:lrd6wk9lhwcKT3cScfw8uvIWd4VLXrBWl/56vruxulE=",
+    "/con_debater": "sha256:7sZKOcG37FChxSfSPttZPEWvM9u++IiIFUNwpt30UVM=",
+    "/gateway": "sha256:CoXy/8t84D5WN73GbS6SKudouTaCtwebINs8gjWo0NQ=",
+    "/green": "sha256:HRE24XvTZTkdPxdyr6Rg55eWyedlH0GtEhGd/CYsm1A=",
+    "/pro_debater": "sha256:yYj7KOvOGSzgF06/KOZ34Ew5cJ575h3eAOZX9IkqyfM="
+  },
+  "timestamp": "2026-03-02T21:45:59Z",
+  "github_actions": {
+    "run_url": "https://github.com/staverm/amber-runner/actions/runs/22597060622",
+    "ref": "refs/pull/34/merge",
+    "sha": "8e1ecb5619dc0333f060c6443050f35c33cda55c",
+    "repository_url": "https://github.com/staverm/amber-runner",
+    "workflow_ref": "staverm/amber-runner/.github/workflows/quick-submit.yml@refs/pull/34/merge",
+    "workflow_sha": "8e1ecb5619dc0333f060c6443050f35c33cda55c"
+  }
+}
