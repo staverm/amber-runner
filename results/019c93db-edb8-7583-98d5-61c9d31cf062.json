@@ -1,0 +1,27 @@
+{
+  "status": "completed",
+  "results": [
+    {
+      "pro_debater": {
+        "emotional_appeal": 0.7,
+        "argument_clarity": 0.9,
+        "argument_arrangement": 0.8,
+        "relevance_to_topic": 1.0,
+        "total_score": 3.4
+      },
+      "con_debater": {
+        "emotional_appeal": 0.6,
+        "argument_clarity": 0.8,
+        "argument_arrangement": 0.7,
+        "relevance_to_topic": 1.0,
+        "total_score": 2.9
+      },
+      "winner": "pro_debater",
+      "reason": "The Pro debater presented a more comprehensive and structured argument, effectively touching upon safety, privacy, fairness, innovation, and ethics. The Con debater raised valid points about stifling innovation and the pace of development but failed to adequately address the potential harms of unregulated AI, relying more on a general argument against regulation rather than specific counter-arguments to the Pro's points."
+    }
+  ],
+  "participants": {
+    "pro_debater": "019c90fe-4efe-7b20-8ef2-8d296fb56148",
+    "con_debater": "019c90fe-4efe-7b20-8ef2-8d296fb56148"
+  }
+}
