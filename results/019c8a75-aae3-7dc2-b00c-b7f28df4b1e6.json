@@ -1,0 +1,28 @@
+{
+  "status": "completed",
+  "results": [
+    {
+      "pro_debater": {
+        "emotional_appeal": 0.7,
+        "argument_clarity": 0.9,
+        "argument_arrangement": 0.9,
+        "relevance_to_topic": 1.0,
+        "total_score": 3.5
+      },
+      "con_debater": {
+        "emotional_appeal": 0.6,
+        "argument_clarity": 0.9,
+        "argument_arrangement": 0.9,
+        "relevance_to_topic": 1.0,
+        "total_score": 3.4
+      },
+      "winner": "pro_debater",
+      "reason": "The Pro debater presented a more comprehensive and well-structured argument, effectively touching upon safety, privacy, innovation, ethics, and global cooperation. While the Con debater raised valid concerns about stifling innovation and the challenges of regulation, the Pro side's arguments felt more grounded in immediate and potential future risks that regulation aims to mitigate. The Pro's points about safety and ethical concerns were particularly strong."
+    }
+  ],
+  "participants": {
+    "con_debater": 8910,
+    "debate_judge": 1234,
+    "pro_debater": 567
+  }
+}
