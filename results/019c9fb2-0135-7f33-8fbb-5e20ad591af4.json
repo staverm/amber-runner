@@ -1,0 +1,27 @@
+{
+  "status": "completed",
+  "results": [
+    {
+      "pro_debater": {
+        "emotional_appeal": 0.7,
+        "argument_clarity": 0.9,
+        "argument_arrangement": 0.9,
+        "relevance_to_topic": 0.9,
+        "total_score": 3.4
+      },
+      "con_debater": {
+        "emotional_appeal": 0.6,
+        "argument_clarity": 0.8,
+        "argument_arrangement": 0.8,
+        "relevance_to_topic": 0.8,
+        "total_score": 3.0
+      },
+      "winner": "pro_debater",
+      "reason": "The Pro debater provided a more comprehensive and well-structured argument, effectively addressing potential risks and advocating for regulation as a safeguard for ethical development and public safety. While the Con debater raised valid concerns about stifling innovation, their reliance on self-regulation felt less robust than the Pro's call for established regulatory frameworks."
+    }
+  ],
+  "participants": {
+    "pro_debater": "019c9c64-da04-7a41-94dc-ab6d7e5d77a5",
+    "con_debater": "019c9c64-da04-7a41-94dc-ab6d7e5d77a5"
+  }
+}
